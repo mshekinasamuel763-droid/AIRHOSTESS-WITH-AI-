@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AirHostess with AI</title>
+</head>
+
+<body>
+
+    <h1>✈️ AIRHOSTESS WITH AI</h1>
+
+    <h2>AI-Powered Virtual Cabin Crew Assistant</h2>
+
+    <p>
+        Welcome! I am your virtual cabin crew assistant.
+        How can I help you today?
+    </p>
+
+    <input
+        type="text"
+        id="userInput"
+        placeholder="Ask your question..."
+    >
+
+    <button onclick="askAssistant()">Ask AI</button>
+
+    <div id="response"></div>
+
+    <script>
+        function askAssistant() {
+
+            const question =
+                document.getElementById("userInput").value.toLowerCase();
+
+            let answer = "";
+
+            if (question.includes("safety")) {
+                answer =
+                    "Please follow the safety instructions provided by the cabin crew. Fasten your seat belt and follow all crew instructions.";
+            }
+
+            else if (question.includes("meal") ||
+                     question.includes("food")) {
+                answer =
+                    "Meal services depend on your flight and booking. Please check your flight information or contact the cabin crew.";
+            }
+
+            else if (question.includes("flight")) {
+                answer =
+                    "Please provide your flight number or check your airline's official flight information.";
+            }
+
+            else if (question.includes("emergency")) {
+                answer =
+                    "In an emergency, remain calm and immediately follow the instructions of the trained cabin crew.";
+            }
+
+            else if (question.includes("hello") ||
+                     question.includes("hi")) {
+                answer =
+                    "Hello! Welcome to AirHostess with AI. How can I assist you?";
+            }
+
+            else {
+                answer =
+                    "I am currently a prototype AI cabin crew assistant. Please ask about safety, meals, flights, or emergency procedures.";
+            }
+
+            document.getElementById("response").innerHTML =
+                "<h3>AI Response</h3><p>" + answer + "</p>";
+        }
+    </script>
+
+</body>
+</html>
