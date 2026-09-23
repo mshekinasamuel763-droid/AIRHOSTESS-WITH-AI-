@@ -3,74 +3,266 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>AirHostess with AI</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <h1>✈️ AIRHOSTESS WITH AI</h1>
+    <main class="container">
 
-    <h2>AI-Powered Virtual Cabin Crew Assistant</h2>
+        <div class="logo">✈️</div>
 
-    <p>
-        Welcome! I am your virtual cabin crew assistant.
-        How can I help you today?
-    </p>
+        <h1>AIRHOSTESS WITH AI</h1>
 
-    <input
-        type="text"
-        id="userInput"
-        placeholder="Ask your question..."
-    >
+        <p class="subtitle">
+            AI-Powered Virtual Cabin Crew Assistant
+        </p>
 
-    <button onclick="askAssistant()">Ask AI</button>
+        <div class="chat-box" id="chatBox">
 
-    <div id="response"></div>
+            <div class="message">
+                <strong>🤖 AI Cabin Crew</strong>
+                <p>
+                    Welcome aboard! I am your virtual cabin crew assistant.
+                    How can I help you today?
+                </p>
+            </div>
+
+        </div>
+
+        <div class="input-area">
+
+            <input
+                type="text"
+                id="userInput"
+                placeholder="Ask about flight, safety, meals..."
+                onkeydown="handleEnter(event)"
+            >
+
+            <button onclick="askAssistant()">
+                Ask AI
+            </button>
+
+        </div>
+
+        <button
+            onclick="startVoice()"
+            style="width:100%; margin-top:12px;"
+        >
+            🎤 Voice Assistant
+        </button>
+
+        <div class="features">
+
+            <div class="feature" onclick="quickQuestion('safety')">
+                🛟
+                <br>
+                <strong>Safety</strong>
+                <br>
+                <small>Safety assistance</small>
+            </div>
+
+            <div class="feature" onclick="quickQuestion('meal')">
+                🍽️
+                <br>
+                <strong>Meals</strong>
+                <br>
+                <small>Meal information</small>
+            </div>
+
+            <div class="feature" onclick="quickQuestion('flight')">
+                🛫
+                <br>
+                <strong>Flight Info</strong>
+                <br>
+                <small>Flight assistance</small>
+            </div>
+
+            <div class="feature" onclick="quickQuestion('emergency')">
+                🚨
+                <br>
+                <strong>Emergency</strong>
+                <br>
+                <small>Emergency guidance</small>
+            </div>
+
+        </div>
+
+        <div class="message" style="margin-top:20px;">
+
+            <strong>🛫 Project Information</strong>
+
+            <p style="margin-top:10px;">
+                AIRHOSTESS WITH AI is a hackathon prototype designed
+                to provide fast and consistent virtual cabin crew
+                assistance for common passenger questions.
+            </p>
+
+        </div>
+
+    </main>
 
     <script>
+
+        function getAnswer(question) {
+
+            question = question.toLowerCase();
+
+            if (
+                question.includes("safety") ||
+                question.includes("seat belt")
+            ) {
+                return "🛟 Please fasten your seat belt and follow all instructions provided by the trained cabin crew.";
+            }
+
+            if (
+                question.includes("meal") ||
+                question.includes("food") ||
+                question.includes("drink")
+            ) {
+                return "🍽️ Meal and beverage services depend on your flight and booking. Please check your flight information or contact the cabin crew.";
+            }
+
+            if (
+                question.includes("flight") ||
+                question.includes("departure") ||
+                question.includes("arrival")
+            ) {
+                return "🛫 Please provide your flight number or check the airline's official flight information for the latest details.";
+            }
+
+            if (
+                question.includes("emergency") ||
+                question.includes("help")
+            ) {
+                return "🚨 Please remain calm and immediately follow the instructions of the trained cabin crew.";
+            }
+
+            if (
+                question.includes("hello") ||
+                question.includes("hi") ||
+                question.includes("hey")
+            ) {
+                return "👋 Hello! Welcome aboard. I am your AI cabin crew assistant. How can I help you?";
+            }
+
+            if (
+                question.includes("toilet") ||
+                question.includes("washroom")
+            ) {
+                return "🚻 The aircraft lavatory is available for passenger use when permitted. Please follow cabin crew instructions.";
+            }
+
+            if (
+                question.includes("baggage") ||
+                question.includes("luggage")
+            ) {
+                return "🧳 For baggage information, please check your airline's baggage policy or ask the cabin crew.";
+            }
+
+            return "🤖 I am currently a prototype AI cabin crew assistant. You can ask me about safety, meals, flights, emergencies, baggage, or other common passenger questions.";
+
+        }
+
         function askAssistant() {
 
-            const question =
-                document.getElementById("userInput").value.toLowerCase();
+            const input = document.getElementById("userInput");
+            const question = input.value.trim();
 
-            let answer = "";
-
-            if (question.includes("safety")) {
-                answer =
-                    "Please follow the safety instructions provided by the cabin crew. Fasten your seat belt and follow all crew instructions.";
+            if (question === "") {
+                return;
             }
 
-            else if (question.includes("meal") ||
-                     question.includes("food")) {
-                answer =
-                    "Meal services depend on your flight and booking. Please check your flight information or contact the cabin crew.";
-            }
+            addMessage("👤 Passenger", question);
 
-            else if (question.includes("flight")) {
-                answer =
-                    "Please provide your flight number or check your airline's official flight information.";
-            }
+            const answer = getAnswer(question);
 
-            else if (question.includes("emergency")) {
-                answer =
-                    "In an emergency, remain calm and immediately follow the instructions of the trained cabin crew.";
-            }
+            setTimeout(function() {
+                addMessage("🤖 AI Cabin Crew", answer);
+                speak(answer);
+            }, 300);
 
-            else if (question.includes("hello") ||
-                     question.includes("hi")) {
-                answer =
-                    "Hello! Welcome to AirHostess with AI. How can I assist you?";
-            }
-
-            else {
-                answer =
-                    "I am currently a prototype AI cabin crew assistant. Please ask about safety, meals, flights, or emergency procedures.";
-            }
-
-            document.getElementById("response").innerHTML =
-                "<h3>AI Response</h3><p>" + answer + "</p>";
+            input.value = "";
         }
+
+        function addMessage(sender, text) {
+
+            const chatBox = document.getElementById("chatBox");
+            const message = document.createElement("div");
+
+            message.className = "message";
+
+            message.innerHTML =
+                "<strong>" + sender + "</strong><p>" +
+                text + "</p>";
+
+            chatBox.appendChild(message);
+
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function quickQuestion(question) {
+
+            document.getElementById("userInput").value = question;
+
+            askAssistant();
+        }
+
+        function handleEnter(event) {
+
+            if (event.key === "Enter") {
+                askAssistant();
+            }
+        }
+
+        function speak(text) {
+
+            if ("speechSynthesis" in window) {
+
+                const speech =
+                    new SpeechSynthesisUtterance(text);
+
+                speech.rate = 0.95;
+
+                window.speechSynthesis.speak(speech);
+            }
+        }
+
+        function startVoice() {
+
+            const SpeechRecognition =
+                window.SpeechRecognition ||
+                window.webkitSpeechRecognition;
+
+            if (!SpeechRecognition) {
+
+                alert(
+                    "Voice recognition is not supported in this browser."
+                );
+
+                return;
+            }
+
+            const recognition = new SpeechRecognition();
+
+            recognition.lang = "en-US";
+
+            recognition.start();
+
+            recognition.onresult = function(event) {
+
+                const text =
+                    event.results[0][0].transcript;
+
+                document.getElementById("userInput").value = text;
+
+                askAssistant();
+            };
+        }
+
     </script>
 
 </body>
