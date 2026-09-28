@@ -1,6 +1,10 @@
 # ✈️ AIRHOSTESS WITH AI
 
 ## AI-Powered Virtual Cabin Crew Assistant
+## 📸 Project Preview
+
+![AIRHOSTESS WITH AI - Project Preview](./Screenshot%202026-09-28%20222011.png)
+
 
 A modern web-based prototype designed to provide passengers with quick and accessible assistance for common cabin and flight-related questions.
 
